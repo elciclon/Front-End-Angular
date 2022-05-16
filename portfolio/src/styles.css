@@ -11,6 +11,14 @@ p {
   display: table-cell;
 }
 
+#login {
+  color: grayscale(100%);
+}
+
+.social {
+  font-size: 1.5rem;
+}
+
 .container {
   position: relative;
   left: 0px;
@@ -58,6 +66,17 @@ p {
 
 .icon {
   padding-bottom: 50;
+}
+
+.yo_programo {
+  font-size: 14px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.815);
+  text-shadow: 0 0 5px rgb(0, 0, 0, 0.5);
+  text-align: left;
+  margin-top: 0px;
+  padding-top: 0px;
+  padding-left: 0px;
 }
 
 #name {
@@ -108,4 +127,17 @@ p {
   background-color: #095296;
   padding-top: 20px;
   padding-bottom: 20px;
+}
+
+.btn {
+  font-family: sans-serif;
+  font-size: medium;
+  color: white;
+  background-color: blue;
+  background-image: linear-gradient(to right, blue, rgb(0, 162, 255));
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  height: 30px;
+  width: 80px;
 }
