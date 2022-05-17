@@ -12,6 +12,10 @@ import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PorfolioService } from './services/porfolio.service';
 import { InterceptorService } from './services/interceptor.service';
+import { EducationComponent } from './components/education/education.component';
+import { SkillComponent } from './components/skill/skill.component';
+import { LanguageComponent } from './components/language/language.component';
+import { ProjectsComponent } from './components/projects/projects.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +24,11 @@ import { InterceptorService } from './services/interceptor.service';
     AboutComponent,
     ExperienceComponent,
     LoginComponent,
-    PortfolioComponent
+    PortfolioComponent,
+    EducationComponent,
+    SkillComponent,
+    LanguageComponent,
+    ProjectsComponent
   ],
   imports: [
     BrowserModule,
