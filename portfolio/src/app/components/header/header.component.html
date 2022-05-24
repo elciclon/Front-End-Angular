@@ -12,7 +12,7 @@
       <div class="col">
         <button
           type="button"
-          class="btn btn-outline-light float-end social btn-sm align-baseline ms-5"
+          class="login btn-outline-light float-end social btn-sm align-baseline ms-5"
         >
           Login
         </button>
@@ -23,6 +23,13 @@
         <i class="bi bi-github float-end social px-1"></i>
       </div>
     </div>
-    <img src="assets/Img/banner.png" alt="Banner" width="100%" />
+    <img
+      [src]="persons.bannerImage"
+      alt="Banner"
+      width="100%"
+      class="rounded-top"
+    />
+
+    <hr />
   </div>
 </header>

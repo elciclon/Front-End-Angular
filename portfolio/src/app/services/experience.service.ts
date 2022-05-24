@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-// import { Observable } from 'rxjs';
-import { Experience } from '../Experience';
-
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 }
@@ -12,7 +9,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ExperienceService {
-  private apiUrl = 'http://localhost:5000/experience';
+  private apiUrl = 'https://pacific-peak-82886.herokuapp.com/api/person/1';
   
   constructor(private http:HttpClient) { }
 

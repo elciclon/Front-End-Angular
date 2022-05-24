@@ -2,20 +2,21 @@
   <div class="row align-items-top">
     <div class="col-4 d-flex mt-4 justify-content-center">
       <img
-        width="200"
-        height="200"
-        src="../assets/Img/imagen_portfolio.jpg"
-        class="rounded-circle"
+        [src]="persons.profileImage"
+        width="180"
+        height="180"
+        class="rounded border border-dark"
         alt="Foto perfil"
       />
     </div>
 
-    <div class="col-7 d-flex mt-4 align-items-center">
-      <p class="big">
+    <div class="col-6 d-flex mt-4 align-items-center">
+      <p>
         <span class="titles">Acerca de</span><br />
-        <span class="short">Soy </span>Adrián Fernández Fazio,
+        <span class="short">Soy </span
+        ><span class="big">Adrián Fernández Fazio,</span>
         <span class="short">actualmente residiendo en</span><br />
-        Buenos Aires, Argentina.<br />
+        <span class="big">Buenos Aires, Argentina.</span><br />
         <span class="short">Soy </span><span class="big">Full Stack Jr.</span>
         <span class="short"> developer, implementando </span
         ><span class="big">soluciones </span>
@@ -23,7 +24,152 @@
       </p>
     </div>
     <div class="col-1 mt-4">
-      <i class="bi bi-pencil-fill float-end social px-1"></i>
+      <!-- Button trigger modal -->
+      <button
+        *ngIf="userAuthenticated"
+        type="button"
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#aboutModal"
+        (click)="getAboutMe()"
+      >
+        <i class="bi bi-pencil-fill float-end social px-1"></i>
+      </button>
+
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="aboutModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                Editar Acerca de
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="formAbout">
+                <div class="mb-3">
+                  <label for="fullName" class="form-label"
+                    >Nombre y Apellido(s)</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="fullName"
+                    formControlName="fullName"
+                    aria-describedby="fullNameHelp"
+                  />
+                  <div
+                    *ngIf="
+                      fullName?.invalid &&
+                      (fullName?.dirty || fullName?.touched)
+                    "
+                  >
+                    <div
+                      *ngIf="fullName?.errors?.['required']"
+                      class="text-danger"
+                    >
+                      Este campo es requerido
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="location" class="form-label"
+                    >Lugar de residencia</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="location"
+                    formControlName="location"
+                    aria-describedby="locationHelp"
+                  />
+                  <div
+                    *ngIf="
+                      location?.invalid &&
+                      (location?.dirty || location?.touched)
+                    "
+                  >
+                    <div
+                      *ngIf="location?.errors?.['required']"
+                      class="text-danger"
+                    >
+                      El lugar de residencia es requerido
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="job" class="form-label">Posición</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="job"
+                    aria-describedby="jobHelp"
+                    formControlName="job"
+                  />
+                  <div *ngIf="job?.invalid && (job?.dirty || job?.touched)">
+                    <div *ngIf="job?.errors?.['required']" class="text-danger">
+                      La posición es requerida
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="aboutMe" class="form-label">Acerca de mi</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="aboutMe"
+                    aria-describedby="aboutMeHelp"
+                    formControlName="aboutMe"
+                  />
+                  <div
+                    *ngIf="
+                      aboutMe?.invalid && (aboutMe?.dirty || aboutMe?.touched)
+                    "
+                  >
+                    <div
+                      *ngIf="aboutMe?.errors?.['required']"
+                      class="text-danger"
+                    >
+                      Este campo es requerido
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+                id="closeAboutMeModal"
+              >
+                Cerrar
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                (click)="saveAboutMe()"
+              >
+                Guardar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
