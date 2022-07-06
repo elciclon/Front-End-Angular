@@ -16,120 +16,124 @@
         height="150"
       />
     </div>
-    <!-- <div class="col-7 smallest">{{ experience.title }}</div> -->
-    <div class="col-6">TODO</div>
-    <div class="col-1">
-      <i class="bi bi-trash float-end social px-1"></i>
+    <div class="col">
+      <button *ngIf="isLogged" type="button" id="grouped" class="edit">
+        <i class="bi bi-trash float-end social px-1"></i>
+      </button>
       <button
-        *ngIf="userAuthenticated"
+        *ngIf="isLogged"
         type="button"
-        class="btn btn-primary"
+        class="edit"
+        id="grouped"
         data-bs-toggle="modal"
         data-bs-target="#experienceModal"
       >
-        <i class="bi bi-pencil-fill float-end social px-1"></i></button
-      ><!-- Modal -->
-      <div
-        class="modal fade"
-        id="experienceModal"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">
-                Editar Experiencia
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <form [formGroup]="formExperience">
-                <div class="mb-3">
-                  <label for="experienceName" class="form-label"
-                    >Empresa y posición</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="experienceName"
-                    formControlName="experienceName"
-                    aria-describedby="experienceNameHelp"
-                  />
+        <i class="bi bi-pencil-fill float-end social px-1"></i>
+      </button>
+      <button *ngIf="isLogged" type="button" class="edit">
+        <i class="bi bi-plus-lg float-end social px-1"></i>
+      </button>
+    </div>
+    <!-- Edit experience -->
+    <div
+      class="modal fade"
+      id="experienceModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Editar Experiencia
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="formExperience">
+              <div class="mb-3">
+                <label for="experienceName" class="form-label"
+                  >Empresa y posición</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="experienceName"
+                  formControlName="experienceName"
+                  aria-describedby="experienceNameHelp"
+                />
+                <div
+                  *ngIf="
+                    experienceName?.invalid &&
+                    (experienceName?.dirty || experienceName?.touched)
+                  "
+                >
                   <div
-                    *ngIf="
-                      experienceName?.invalid &&
-                      (experienceName?.dirty || experienceName?.touched)
-                    "
+                    *ngIf="experienceName?.errors?.['required']"
+                    class="text-danger"
                   >
-                    <div
-                      *ngIf="experienceName?.errors?.['required']"
-                      class="text-danger"
-                    >
-                      Este campo es requerido
-                    </div>
+                    Este campo es requerido
                   </div>
                 </div>
-                <div class="mb-3">
-                  <label for="experienceImage" class="form-label"
-                    >Url del logo</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="experienceImage"
-                    formControlName="experienceImage"
-                    aria-describedby="experienceImageHelp"
-                  />
+              </div>
+              <div class="mb-3">
+                <label for="experienceImage" class="form-label"
+                  >Url del logo</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="experienceImage"
+                  formControlName="experienceImage"
+                  aria-describedby="experienceImageHelp"
+                />
+                <div
+                  *ngIf="
+                    experienceImage?.invalid &&
+                    (experienceImage?.dirty || experienceImage?.touched)
+                  "
+                >
                   <div
-                    *ngIf="
-                      experienceImage?.invalid &&
-                      (experienceImage?.dirty || experienceImage?.touched)
-                    "
+                    *ngIf="experienceImage?.errors?.['required']"
+                    class="text-danger"
                   >
-                    <div
-                      *ngIf="experienceImage?.errors?.['required']"
-                      class="text-danger"
-                    >
-                      La url del logo es requerida
-                    </div>
-                    <div
-                      *ngIf="experienceImage?.errors?.['pattern']"
-                      class="text-danger"
-                    >
-                      El formato de la url es inválido
-                    </div>
+                    La url del logo es requerida
+                  </div>
+                  <div
+                    *ngIf="experienceImage?.errors?.['pattern']"
+                    class="text-danger"
+                  >
+                    El formato de la url es inválido
                   </div>
                 </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-                id="closeExperienceModal"
-              >
-                Cerrar
-              </button>
-              <button
-                type="button"
-                class="btn btn-primary"
-                (click)="saveExperience()"
-              >
-                Guardar
-              </button>
-            </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              id="closeExperienceModal"
+            >
+              Cerrar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="saveExperience()"
+            >
+              Guardar
+            </button>
           </div>
         </div>
       </div>
     </div>
-    <!-- </div> -->
   </div>
 </div>

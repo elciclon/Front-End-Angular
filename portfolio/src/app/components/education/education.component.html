@@ -4,26 +4,410 @@
     <div class="titles col-3">Educación:</div>
     <div class="col-6"></div>
     <div class="col-1">
-      <i class="bi bi-plus-lg float-end social px-1"></i>
+      <button
+        *ngIf="isLogged"
+        type="button"
+        class="edit float-start"
+        data-bs-toggle="modal"
+        data-bs-target="#addEducationModal"
+      >
+        <i class="bi bi-plus-lg social px-1"></i>
+      </button>
+    </div>
+
+    <!-- Add education -->
+
+    <div
+      class="modal fade"
+      id="addEducationModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Agregar Educación
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="formEducation">
+              <!-- Institution -->
+              <div class="mb-3">
+                <label for="institution" class="form-label">Institución</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="institution"
+                  formControlName="institution"
+                  aria-describedby="institutionHelp"
+                />
+                <div
+                  *ngIf="
+                    institution?.invalid &&
+                    (institution?.dirty || institution?.touched)
+                  "
+                >
+                  <div
+                    *ngIf="institution?.errors?.['required']"
+                    class="text-danger"
+                  >
+                    Este campo es requerido
+                  </div>
+                </div>
+              </div>
+              <!-- Career -->
+              <div class="mb-3">
+                <label for="Career" class="form-label">Carrera/título</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="career"
+                  formControlName="career"
+                  aria-describedby="careerHelp"
+                />
+                <div
+                  *ngIf="career?.invalid && (career?.dirty || career?.touched)"
+                >
+                  <div *ngIf="career?.errors?.['required']" class="text-danger">
+                    Este campo es requerido
+                  </div>
+                </div>
+              </div>
+              <!-- Start -->
+              <div class="mb-3">
+                <label for="start" class="form-label">Año de ingreso</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="start"
+                  formControlName="start"
+                  aria-describedby="start"
+                />
+                <div *ngIf="start?.invalid && (start?.dirty || start?.touched)">
+                  <div *ngIf="start?.errors?.['required']" class="text-danger">
+                    Ingrese un año de ingreso válido
+                  </div>
+                  <div *ngIf="start?.errors?.['pattern']" class="text-danger">
+                    Ingrese un año válido
+                  </div>
+                  <div *ngIf="start?.errors?.['min']" class="text-danger">
+                    Ingrese un año desde 1972
+                  </div>
+                  <div *ngIf="start?.errors?.['max']" class="text-danger">
+                    Ingrese un año no superior al 2072
+                  </div>
+                </div>
+              </div>
+              <!-- End -->
+              <div class="mb-3">
+                <label for="end" class="form-label">Año de egreso</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="end"
+                  formControlName="end"
+                  aria-describedby="endHelp"
+                />
+                <div *ngIf="end?.invalid && (end?.dirty || end?.touched)">
+                  <div *ngIf="end?.errors?.['required']" class="text-danger">
+                    Ingrese un año de egreso válido
+                  </div>
+                  <div *ngIf="end?.errors?.['pattern']" class="text-danger">
+                    Ingrese un año válido
+                  </div>
+                  <div *ngIf="end?.errors?.['min']" class="text-danger">
+                    Ingrese un año desde 1972
+                  </div>
+                  <div *ngIf="end?.errors?.['max']" class="text-danger">
+                    Ingrese un año no superior al 2072
+                  </div>
+                </div>
+              </div>
+              <!-- Image url -->
+              <div class="mb-3">
+                <label for="urlImage" class="form-label">Url del logo</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="urlImage"
+                  formControlName="urlImage"
+                  aria-describedby="urlImageHelp"
+                />
+                <div
+                  *ngIf="
+                    urlImage?.invalid && (urlImage?.dirty || urlImage?.touched)
+                  "
+                >
+                  <div
+                    *ngIf="urlImage?.errors?.['required']"
+                    class="text-danger"
+                  >
+                    La url del logo es requerida
+                  </div>
+                  <div
+                    *ngIf="urlImage?.errors?.['pattern']"
+                    class="text-danger"
+                  >
+                    El formato de la url es inválido
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              id="closeEducationModal"
+            >
+              Cerrar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="createEducation()"
+            >
+              Guardar
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="container-fluid">
-    <!-- <div *ngFor="let education of educations" class="row align-items-top"> -->
-    <div class="col-1"></div>
-    <div class="col-3">
-      <!-- <img
-        [src]="../assets/Img/computer_coffee.png"
-        class="rounded float-left"
-        alt="Computer and coffee"
-        width="150"
-        height="150"
-      /> -->
-    </div>
-    <div class="col-6">TODO</div>
-    <div class="col-1">
-      <i class="bi bi-trash float-end social px-1"></i>
-      <i class="bi bi-pencil-fill float-end social px-1"></i>
+    <div *ngFor="let education of educations" class="row align-items-top">
+      <div class="col-1"></div>
+      <div class="col-3">
+        <img
+          [src]="education.urlImage"
+          class="rounded float-left"
+          alt="Computer and coffee"
+          width="150"
+          height="150"
+        />
+      </div>
+      <div class="col-6">
+        <p>
+          <span class="big"
+            >{{ education.institution }}, {{ education.career }},
+          </span>
+          <span class="short">desde </span>
+          <span class="big">{{ education.start }} </span>
+          <span class="short">hasta </span>
+          <span class="big">{{ education.end }}.</span>
+        </p>
+      </div>
+      <div class="col-1">
+        <button
+          *ngIf="isLogged"
+          type="button"
+          id="grouped"
+          class="edit float-start"
+        >
+          <i class="bi bi-trash social px-1"></i>
+        </button>
+        <button
+          *ngIf="isLogged"
+          type="button"
+          class="edit"
+          id="grouped"
+          data-bs-toggle="modal"
+          [attr.data-bs-target]="'#educationModal' + education.id"
+          (click)="getEducation(education)"
+        >
+          <i class="bi bi-pencil-fill social px-1"></i>
+        </button>
+      </div>
+
+      <!-- Editar Educación -->
+      <div
+        class="modal fade"
+        [id]="'educationModal' + education.id"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <p>{{ education.id }},{{ education.institution }}</p>
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                Editar Educación
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="formEducation">
+                <!-- Institution -->
+                <div class="mb-3">
+                  <label for="institution" class="form-label"
+                    >Institución</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="institution"
+                    formControlName="institution"
+                    aria-describedby="institutionHelp"
+                  />
+                  <div
+                    *ngIf="
+                      institution?.invalid &&
+                      (institution?.dirty || institution?.touched)
+                    "
+                  >
+                    <div
+                      *ngIf="institution?.errors?.['required']"
+                      class="text-danger"
+                    >
+                      Este campo es requerido
+                    </div>
+                  </div>
+                </div>
+                <!-- Career -->
+                <div class="mb-3">
+                  <label for="Career" class="form-label">Carrera/título</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="career"
+                    formControlName="career"
+                    aria-describedby="careerHelp"
+                  />
+                  <div
+                    *ngIf="
+                      career?.invalid && (career?.dirty || career?.touched)
+                    "
+                  >
+                    <div
+                      *ngIf="career?.errors?.['required']"
+                      class="text-danger"
+                    >
+                      Este campo es requerido
+                    </div>
+                  </div>
+                </div>
+                <!-- Start -->
+                <div class="mb-3">
+                  <label for="start" class="form-label">Año de ingreso</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="start"
+                    formControlName="start"
+                    aria-describedby="start"
+                  />
+                  <div
+                    *ngIf="start?.invalid && (start?.dirty || start?.touched)"
+                  >
+                    <div
+                      *ngIf="start?.errors?.['required']"
+                      class="text-danger"
+                    >
+                      Ingrese un año de ingreso válido
+                    </div>
+                    <div *ngIf="start?.errors?.['pattern']" class="text-danger">
+                      Ingrese un año válido
+                    </div>
+                    <div *ngIf="start?.errors?.['min']" class="text-danger">
+                      Ingrese un año desde 1972
+                    </div>
+                    <div *ngIf="start?.errors?.['max']" class="text-danger">
+                      Ingrese un año no superior al 2072
+                    </div>
+                  </div>
+                </div>
+                <!-- End -->
+                <div class="mb-3">
+                  <label for="end" class="form-label">Año de egreso</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="end"
+                    formControlName="end"
+                    aria-describedby="endHelp"
+                  />
+                  <div *ngIf="end?.invalid && (end?.dirty || end?.touched)">
+                    <div *ngIf="end?.errors?.['required']" class="text-danger">
+                      Ingrese un año de egreso válido
+                    </div>
+                    <div *ngIf="end?.errors?.['pattern']" class="text-danger">
+                      Ingrese un año válido
+                    </div>
+                    <div *ngIf="end?.errors?.['min']" class="text-danger">
+                      Ingrese un año desde 1972
+                    </div>
+                    <div *ngIf="end?.errors?.['max']" class="text-danger">
+                      Ingrese un año no superior al 2072
+                    </div>
+                  </div>
+                </div>
+                <!-- Image url -->
+                <div class="mb-3">
+                  <label for="urlImage" class="form-label">Url del logo</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="urlImage"
+                    formControlName="urlImage"
+                    aria-describedby="urlImageHelp"
+                  />
+                  <div
+                    *ngIf="
+                      urlImage?.invalid &&
+                      (urlImage?.dirty || urlImage?.touched)
+                    "
+                  >
+                    <div
+                      *ngIf="urlImage?.errors?.['required']"
+                      class="text-danger"
+                    >
+                      La url del logo es requerida
+                    </div>
+                    <div
+                      *ngIf="urlImage?.errors?.['pattern']"
+                      class="text-danger"
+                    >
+                      El formato de la url es inválido
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+                id="closeEducationModal"
+              >
+                Cerrar
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                (click)="updateEducation(education)"
+              >
+                Guardar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-<!-- </div> -->

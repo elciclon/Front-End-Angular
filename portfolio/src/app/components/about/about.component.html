@@ -14,21 +14,21 @@
       <p>
         <span class="titles">Acerca de</span><br />
         <span class="short">Soy </span
-        ><span class="big">Adrián Fernández Fazio,</span>
+        ><span class="big">{{ persons.fullName }},</span>
         <span class="short">actualmente residiendo en</span><br />
-        <span class="big">Buenos Aires, Argentina.</span><br />
-        <span class="short">Soy </span><span class="big">Full Stack Jr.</span>
-        <span class="short"> developer, implementando </span
+        <span class="big">{{ persons.location }}.</span><br />
+        <span class="short">Soy </span
+        ><span class="big">{{ persons.job }},</span>
+        <span class="short"> implementando </span
         ><span class="big">soluciones </span>
         <span class="short">para la web.</span><br />
       </p>
     </div>
     <div class="col-1 mt-4">
-      <!-- Button trigger modal -->
       <button
-        *ngIf="userAuthenticated"
+        *ngIf="isLogged"
         type="button"
-        class="btn btn-primary"
+        class="edit"
         data-bs-toggle="modal"
         data-bs-target="#aboutModal"
         (click)="getAboutMe()"
@@ -36,7 +36,7 @@
         <i class="bi bi-pencil-fill float-end social px-1"></i>
       </button>
 
-      <!-- Modal -->
+      <!-- Edit About Me -->
       <div
         class="modal fade"
         id="aboutModal"
@@ -148,6 +148,38 @@
                     </div>
                   </div>
                 </div>
+                <!-- Image url -->
+                <div class="mb-3">
+                  <label for="profileImage" class="form-label"
+                    >Url del logo</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="profileImage"
+                    formControlName="profileImage"
+                    aria-describedby="profileImageHelp"
+                  />
+                  <div
+                    *ngIf="
+                      profileImage?.invalid &&
+                      (profileImage?.dirty || profileImage?.touched)
+                    "
+                  >
+                    <div
+                      *ngIf="profileImage?.errors?.['required']"
+                      class="text-danger"
+                    >
+                      La url del logo es requerida
+                    </div>
+                    <div
+                      *ngIf="profileImage?.errors?.['pattern']"
+                      class="text-danger"
+                    >
+                      El formato de la url es inválido
+                    </div>
+                  </div>
+                </div>
               </form>
             </div>
             <div class="modal-footer">
@@ -162,7 +194,7 @@
               <button
                 type="button"
                 class="btn btn-primary"
-                (click)="saveAboutMe()"
+                (click)="updateAboutMe()"
               >
                 Guardar
               </button>

@@ -29,9 +29,39 @@ p {
   color: rgba(243, 237, 237, 0.925);
 }
 
-.btn {
-  background-color: #022b2c !important;
+.login {
+  font-family: sans-serif;
+  font-size: medium;
+  color: white;
+  background-color: rgb(0, 255, 179);
+  background-image: linear-gradient(to right, rgb(56, 70, 70), rgb(14, 61, 59));
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  height: 30px;
+  width: 80px;
+}
+
+.edit {
+  background-color: #022b2c;
   border: none;
+  color: white;
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  }
+
+  .edit-social {
+    background-color: #022b2c;
+    border: none;
+    color: white;
+    height: 26px;
+    width: 26px;
+    cursor: pointer;
+    }
+
+#grouped{
+  float: left;
 }
 
 .container {
@@ -154,19 +184,6 @@ p {
   background-color: #095296;
   padding-top: 20px;
   padding-bottom: 20px;
-}
-
-.login {
-  font-family: sans-serif;
-  font-size: medium;
-  color: white;
-  background-color: rgb(0, 255, 179);
-  background-image: linear-gradient(to right, rgb(56, 70, 70), rgb(14, 61, 59));
-  border-radius: 12px;
-  display: inline-flex;
-  align-items: center;
-  height: 30px;
-  width: 80px;
 }
 
 .ng-valid:not(form).ng-touched{

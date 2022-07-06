@@ -1,4 +1,8 @@
 export interface Experience {
-    id: number;
-    title: string;
+  id: number;
+  firm: string;
+  job: string;
+  start: number;
+  end: number;
+  urlImage: string;
 }

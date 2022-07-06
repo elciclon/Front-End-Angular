@@ -11,7 +11,7 @@ import { LoginComponent } from './components/login/login.component';
 import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PorfolioService } from './services/porfolio.service';
-import { InterceptorService } from './services/interceptor.service';
+import { interceptorProvider } from './services/interceptor.service';
 import { EducationComponent } from './components/education/education.component';
 import { SkillComponent } from './components/skill/skill.component';
 import { LanguageComponent } from './components/language/language.component';
@@ -28,16 +28,15 @@ import { ProjectsComponent } from './components/projects/projects.component';
     EducationComponent,
     SkillComponent,
     LanguageComponent,
-    ProjectsComponent
+    ProjectsComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  providers: [PorfolioService,
-    {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}],
-  bootstrap: [AppComponent]
+  providers: [PorfolioService, interceptorProvider],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

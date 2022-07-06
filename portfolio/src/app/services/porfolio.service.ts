@@ -3,14 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PorfolioService {
-  url:string="http://localhost:5000/porfolio";
+  url: string = 'http://localhost:8080/porfolio';
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  obtenerDatos():Observable<any>{
+  obtenerDatos(): Observable<any> {
     return this.http.get<any>(this.url);
   }
 }

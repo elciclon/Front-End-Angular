@@ -4,7 +4,9 @@
     <div class="titles col-3">Idiomas:</div>
     <div class="col-6"></div>
     <div class="col-1">
-      <i class="bi bi-plus-lg float-end social px-1"></i>
+      <button *ngIf="isLogged" type="button" class="edit">
+        <i class="bi bi-plus-lg float-end social px-1"></i>
+      </button>
     </div>
   </div>
   <div class="row align-items-top">
@@ -39,22 +41,35 @@
           <td>
             <div class="skill">
               Inglés
-              <i class="bi bi-pencil-fill social-skill px-1"></i>
-              <i class="bi bi-trash social-skill px-1"></i>
+              <button
+                *ngIf="isLogged"
+                type="button"
+                class="edit-social"
+                data-bs-toggle="modal"
+                data-bs-target="#educationModal"
+              >
+                <i class="bi bi-pencil-fill social-skill px-1"></i>
+              </button>
+              <button *ngIf="isLogged" type="button" class="edit-social">
+                <i class="bi bi-trash social-skill px-1"></i>
+              </button>
             </div>
           </td>
           <td>
             <div class="skill">
               Inglés
-              <i class="bi bi-pencil-fill social-skill px-1"></i>
-              <i class="bi bi-trash social-skill px-1"></i>
-            </div>
-          </td>
-          <td>
-            <div class="skill">
-              Python
-              <i class="bi bi-pencil-fill social-skill px-1"></i>
-              <i class="bi bi-trash social-skill px-1"></i>
+              <button
+                *ngIf="isLogged"
+                type="button"
+                class="edit-social"
+                data-bs-toggle="modal"
+                data-bs-target="#educationModal"
+              >
+                <i class="bi bi-pencil-fill social-skill px-1"></i>
+              </button>
+              <button *ngIf="isLogged" type="button" class="edit-social">
+                <i class="bi bi-trash social-skill px-1"></i>
+              </button>
             </div>
           </td>
         </tr>

@@ -11,10 +11,21 @@
       </div>
       <div class="col">
         <button
+          *ngIf="!isLogged"
           type="button"
           class="login btn-outline-light float-end social btn-sm align-baseline ms-5"
+          routerLink="/login"
         >
           Login
+        </button>
+        <button
+          *ngIf="isLogged"
+          type="button"
+          class="login btn-outline-light float-end social btn-sm align-baseline ms-5"
+          routerLink="/portfolio"
+          (click)="onLogout()"
+        >
+          Logout
         </button>
         <i class="bi bi-facebook float-end social px-1"></i>
         <i class="bi bi-instagram float-end social px-1"></i>
