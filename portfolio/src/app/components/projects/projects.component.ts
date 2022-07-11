@@ -14,7 +14,7 @@ export class ProjectsComponent implements OnInit {
   formProject: FormGroup;
   projects: Project[] = [];
   numRegex = '^[0-9]*$';
-  projectId: 0;
+
   constructor(
     private projectsService: ProjectsService,
     private formBuilder: FormBuilder,
@@ -86,8 +86,28 @@ export class ProjectsComponent implements OnInit {
     }
   }
 
+  deleteProject(projectId: number) {
+    this.projectsService
+      .deleteProject(projectId)
+      .subscribe((projectsFromApi: any) => {
+        this.projects = projectsFromApi;
+      });
+  }
+
   onLogout(): void {
     this.tokenService.logout();
     window.location.reload();
+  }
+
+  get projectTitle() {
+    return this.formProject.get('projectTitle');
+  }
+
+  get projectDescription() {
+    return this.formProject.get('projectDescription');
+  }
+
+  get urlImage() {
+    return this.formProject.get('urlImage');
   }
 }

@@ -14,7 +14,6 @@ export class LanguageComponent implements OnInit {
   formLanguage: FormGroup;
   languages: Language[] = [];
   numRegex = '^[0-9]*$';
-  languageId: 0;
 
   constructor(
     private languageService: LanguageService,
@@ -89,8 +88,24 @@ export class LanguageComponent implements OnInit {
     }
   }
 
+  deleteLanguage(languageId: number) {
+    this.languageService
+      .deleteLanguage(languageId)
+      .subscribe((languagesFromApi: any) => {
+        this.languages = languagesFromApi;
+      });
+  }
+
   onLogout(): void {
     this.tokenService.logout();
     window.location.reload();
+  }
+
+  get language() {
+    return this.formLanguage.get('language');
+  }
+
+  get score() {
+    return this.formLanguage.get('score');
   }
 }

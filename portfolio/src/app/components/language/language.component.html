@@ -1,82 +1,284 @@
-<div class="container">
+<div class="container mt-4">
   <div class="row align-items-top">
     <div class="col-1"></div>
-    <div class="titles col-3">Idiomas:</div>
+    <div class="titles col-3">Idiomas</div>
     <div class="col-6"></div>
     <div class="col-1">
-      <button *ngIf="isLogged" type="button" class="edit">
-        <i class="bi bi-plus-lg float-end social px-1"></i>
+      <button
+        *ngIf="isLogged"
+        type="button"
+        class="edit float-score"
+        data-bs-toggle="modal"
+        data-bs-target="#addLanguageModal"
+      >
+        <i class="bi bi-plus-lg social px-1"></i>
       </button>
     </div>
   </div>
+
+  <!-- Add Language -->
+
+  <div
+    class="modal fade"
+    id="addLanguageModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Agregar Idioma</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="formLanguage">
+            <!-- Language -->
+            <div class="mb-3">
+              <label for="skill" class="form-label">Idioma</label>
+              <input
+                type="text"
+                class="form-control"
+                id="language"
+                formControlName="language"
+                aria-describedby="languageHelp"
+              />
+              <div
+                *ngIf="
+                  language?.invalid && (language?.dirty || language?.touched)
+                "
+              >
+                <div *ngIf="language?.errors?.['required']" class="text-danger">
+                  Este campo es requerido
+                </div>
+              </div>
+            </div>
+            <!-- Score -->
+            <div class="mb-3">
+              <label for="score" class="form-label"
+                >Porcentaje completado</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                id="score"
+                formControlName="score"
+                aria-describedby="score"
+              />
+              <div *ngIf="score?.invalid && (score?.dirty || score?.touched)">
+                <div *ngIf="score?.errors?.['required']" class="text-danger">
+                  Ingrese un porcentaje válido
+                </div>
+                <div *ngIf="score?.errors?.['pattern']" class="text-danger">
+                  Ingrese un porcentaje válido
+                </div>
+                <div *ngIf="score?.errors?.['min']" class="text-danger">
+                  Ingrese un mínimo de 1%
+                </div>
+                <div *ngIf="score?.errors?.['max']" class="text-danger">
+                  Ingrese máximo de 100%
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            id="closeLanguageModal"
+          >
+            Cerrar
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="createLanguage()"
+          >
+            Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Show Languages -->
+<div class="container-fluid">
   <div class="row align-items-top">
     <div class="col-3"></div>
     <div class="col-6">
       <table>
-        <tr>
-          <td>
-            <div class="progress green">
-              <span class="progress-left">
-                <span class="progress-bar"></span>
-              </span>
-              <span class="progress-right">
-                <span class="progress-bar"></span>
-              </span>
-              <div class="progress-value">70%</div>
+        <td *ngFor="let lang of languages">
+          <table>
+            <tr>
+              <div class="d-flex justify-content-end">
+                <button
+                  *ngIf="isLogged"
+                  type="button"
+                  class="edit-social"
+                  data-bs-toggle="modal"
+                  [attr.data-bs-target]="'#languageModal' + lang.id"
+                  (click)="getLanguage(lang)"
+                >
+                  <i class="bi bi-pencil-fill social-skill px-1"></i>
+                </button>
+                <button
+                  *ngIf="isLogged"
+                  type="button"
+                  class="edit-social"
+                  (click)="deleteLanguage(lang.id)"
+                >
+                  <i class="bi bi-trash social-skill px-1"></i>
+                </button>
+              </div>
+            </tr>
+            <tr>
+              <td>
+                <div>
+                  <div class="dashboard">
+                    <svg>
+                      <circle class="bg" cx="57" cy="57" r="52" />
+                      <circle
+                        [ngClass]="{
+                          'meter-1-green': lang.score <= 50,
+                          'meter-2-green': lang.score > 50 && lang.score <= 70,
+                          'meter-3-green': lang.score > 70
+                        }"
+                        cx="57"
+                        cy="57"
+                        r="52"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="d-flex justify-content-center">
+                  <p class="skill">
+                    {{ lang.language }}
+                  </p>
+                </div>
+              </td>
+            </tr>
+          </table>
+
+          <!-- Edit Language -->
+          <div
+            class="modal fade"
+            [id]="'languageModal' + lang.id"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Editar Idioma
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form [formGroup]="formLanguage">
+                    <!-- Language -->
+                    <div class="mb-3">
+                      <label for="language" class="form-label">Idioma</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="language"
+                        formControlName="language"
+                        aria-describHabilidad="languageHelp"
+                      />
+                      <div
+                        *ngIf="
+                          language?.invalid &&
+                          (language?.dirty || language?.touched)
+                        "
+                      >
+                        <div
+                          *ngIf="language?.errors?.['required']"
+                          class="text-danger"
+                        >
+                          Este campo es requerido
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Score -->
+
+                    <label for="score" class="form-label"
+                      >Porcentaje completado</label
+                    >
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="score"
+                      formControlName="score"
+                      aria-describedby="scoreHelp"
+                    />
+                    <div
+                      *ngIf="score?.invalid && (score?.dirty || score?.touched)"
+                    >
+                      <div
+                        *ngIf="score?.errors?.['required']"
+                        class="text-danger"
+                      >
+                        Ingrese un porcentaje válido
+                      </div>
+                      <div
+                        *ngIf="score?.errors?.['pattern']"
+                        class="text-danger"
+                      >
+                        Ingrese un porcentaje válido
+                      </div>
+                      <div *ngIf="score?.errors?.['min']" class="text-danger">
+                        Ingrese un mínimo de 1%
+                      </div>
+                      <div *ngIf="score?.errors?.['max']" class="text-danger">
+                        Ingrese máximo de 100%
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                    id="closeLanguageModal"
+                  >
+                    Cerrar
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="updateLanguage(lang)"
+                  >
+                    Guardar
+                  </button>
+                </div>
+              </div>
             </div>
-          </td>
-          <td>
-            <div class="progress green">
-              <span class="progress-left">
-                <span class="progress-bar"></span>
-              </span>
-              <span class="progress-right">
-                <span class="progress-bar"></span>
-              </span>
-              <div class="progress-value">70%</div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="skill">
-              Inglés
-              <button
-                *ngIf="isLogged"
-                type="button"
-                class="edit-social"
-                data-bs-toggle="modal"
-                data-bs-target="#educationModal"
-              >
-                <i class="bi bi-pencil-fill social-skill px-1"></i>
-              </button>
-              <button *ngIf="isLogged" type="button" class="edit-social">
-                <i class="bi bi-trash social-skill px-1"></i>
-              </button>
-            </div>
-          </td>
-          <td>
-            <div class="skill">
-              Inglés
-              <button
-                *ngIf="isLogged"
-                type="button"
-                class="edit-social"
-                data-bs-toggle="modal"
-                data-bs-target="#educationModal"
-              >
-                <i class="bi bi-pencil-fill social-skill px-1"></i>
-              </button>
-              <button *ngIf="isLogged" type="button" class="edit-social">
-                <i class="bi bi-trash social-skill px-1"></i>
-              </button>
-            </div>
-          </td>
-        </tr>
+          </div>
+        </td>
       </table>
     </div>
 
     <div class="col-3"></div>
   </div>
-  <hr />
 </div>

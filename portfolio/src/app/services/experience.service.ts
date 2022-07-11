@@ -25,4 +25,8 @@ export class ExperienceService {
   createExperience(experience: Experience): Observable<any> {
     return this.http.post(this.apiUrl + '/1/experiences', experience);
   }
+
+  deleteExperience(experienceId: number): Observable<any> {
+    return this.http.delete(this.apiUrl + '/experiences/' + experienceId);
+  }
 }

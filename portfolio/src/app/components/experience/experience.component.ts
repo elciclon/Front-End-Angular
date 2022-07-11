@@ -16,7 +16,6 @@ export class ExperienceComponent implements OnInit {
   formExperience: FormGroup;
   experiences: Experience[] = [];
   numRegex = '^[0-9]*$';
-  experienceId: 0;
 
   constructor(
     private experienceService: ExperienceService,
@@ -111,16 +110,36 @@ export class ExperienceComponent implements OnInit {
     }
   }
 
+  deleteExperience(experienceId: number) {
+    this.experienceService
+      .deleteExperience(experienceId)
+      .subscribe((experiencesFromApi: any) => {
+        this.experiences = experiencesFromApi;
+      });
+  }
+
   onLogout(): void {
     this.tokenService.logout();
     window.location.reload();
   }
 
-  get experienceName() {
-    return this.formExperience.get('experienceName');
+  get firm() {
+    return this.formExperience.get('firm');
   }
 
-  get experienceImage() {
-    return this.formExperience.get('experienceImage');
+  get job() {
+    return this.formExperience.get('job');
+  }
+
+  get start() {
+    return this.formExperience.get('start');
+  }
+
+  get end() {
+    return this.formExperience.get('end');
+  }
+
+  get urlImage() {
+    return this.formExperience.get('urlImage');
   }
 }

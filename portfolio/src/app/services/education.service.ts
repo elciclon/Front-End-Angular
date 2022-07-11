@@ -25,4 +25,8 @@ export class EducationService {
   createEducation(education: Education): Observable<any> {
     return this.http.post(this.apiUrl + '/1/educations', education);
   }
+
+  deleteEducation(educationId: number): Observable<any> {
+    return this.http.delete(this.apiUrl + '/educations/' + educationId);
+  }
 }

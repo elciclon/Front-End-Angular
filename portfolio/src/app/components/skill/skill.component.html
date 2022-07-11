@@ -4,103 +4,270 @@
     <div class="titles col-3">Hard & Soft Skills:</div>
     <div class="col-6"></div>
     <div class="col-1">
-      <button *ngIf="isLogged" type="button" class="edit">
-        <i class="bi bi-plus-lg float-end social px-1"></i>
+      <button
+        *ngIf="isLogged"
+        type="button"
+        class="edit float-score"
+        data-bs-toggle="modal"
+        data-bs-target="#addSkillModal"
+      >
+        <i class="bi bi-plus-lg social px-1"></i>
       </button>
     </div>
   </div>
+
+  <!-- Add Skill -->
+
+  <div
+    class="modal fade"
+    id="addSkillModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Agregar Habilidad</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="formSkill">
+            <!-- Skill -->
+            <div class="mb-3">
+              <label for="skill" class="form-label">Habilidad</label>
+              <input
+                type="text"
+                class="form-control"
+                id="skill"
+                formControlName="skill"
+                aria-describedby="skillHelp"
+              />
+              <div *ngIf="skill?.invalid && (skill?.dirty || skill?.touched)">
+                <div *ngIf="skill?.errors?.['required']" class="text-danger">
+                  Este campo es requerido
+                </div>
+              </div>
+            </div>
+            <!-- Score -->
+            <div class="mb-3">
+              <label for="score" class="form-label"
+                >Porcentaje completado</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                id="score"
+                formControlName="score"
+                aria-describedby="score"
+              />
+              <div *ngIf="score?.invalid && (score?.dirty || score?.touched)">
+                <div *ngIf="score?.errors?.['required']" class="text-danger">
+                  Ingrese un porcentaje válido
+                </div>
+                <div *ngIf="score?.errors?.['pattern']" class="text-danger">
+                  Ingrese un porcentaje válido
+                </div>
+                <div *ngIf="score?.errors?.['min']" class="text-danger">
+                  Ingrese un mínimo de 1%
+                </div>
+                <div *ngIf="score?.errors?.['max']" class="text-danger">
+                  Ingrese máximo de 100%
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            id="closeSkillModal"
+          >
+            Cerrar
+          </button>
+          <button type="button" class="btn btn-primary" (click)="createSkill()">
+            Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Show Skills -->
+<div class="container-fluid">
   <div class="row align-items-top">
     <div class="col-3"></div>
     <div class="col-6">
       <table>
-        <tr>
-          <td>
-            <div class="progress orange">
-              <span class="progress-left">
-                <span class="progress-bar"></span>
-              </span>
-              <span class="progress-right">
-                <span class="progress-bar"></span>
-              </span>
-              <div class="progress-value">70%</div>
+        <td *ngFor="let skillType of skills">
+          <table>
+            <tr>
+              <div class="d-flex justify-content-end">
+                <button
+                  *ngIf="isLogged"
+                  type="button"
+                  class="edit-social"
+                  data-bs-toggle="modal"
+                  [attr.data-bs-target]="'#skillModal' + skillType.id"
+                  (click)="getSkill(skillType)"
+                >
+                  <i class="bi bi-pencil-fill social-skill px-1"></i>
+                </button>
+                <button
+                  *ngIf="isLogged"
+                  type="button"
+                  class="edit-social"
+                  (click)="deleteSkill(skillType.id)"
+                >
+                  <i class="bi bi-trash social-skill px-1"></i>
+                </button>
+              </div>
+            </tr>
+            <tr>
+              <td>
+                <div>
+                  <div class="dashboard">
+                    <svg>
+                      <circle class="bg" cx="57" cy="57" r="52" />
+                      <circle
+                        [ngClass]="{
+                          'meter-1': skillType.score <= 50,
+                          'meter-2':
+                            skillType.score > 50 && skillType.score <= 70,
+                          'meter-3': skillType.score > 70
+                        }"
+                        cx="57"
+                        cy="57"
+                        r="52"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="d-flex justify-content-center">
+                  <p class="skill">
+                    {{ skillType.skill }}
+                  </p>
+                </div>
+              </td>
+            </tr>
+          </table>
+
+          <!-- Edit Skill -->
+          <div
+            class="modal fade"
+            [id]="'skillModal' + skillType.id"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Editar Habilidad
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form [formGroup]="formSkill">
+                    <!-- Skill -->
+                    <div class="mb-3">
+                      <label for="skill" class="form-label">Skill</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="skill"
+                        formControlName="skill"
+                        aria-describHabilidad="skillHelp"
+                      />
+                      <div
+                        *ngIf="
+                          skill?.invalid && (skill?.dirty || skill?.touched)
+                        "
+                      >
+                        <div
+                          *ngIf="skill?.errors?.['required']"
+                          class="text-danger"
+                        >
+                          Este campo es requerido
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Score -->
+
+                    <label for="score" class="form-label"
+                      >Porcentaje completado</label
+                    >
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="score"
+                      formControlName="score"
+                      aria-describedby="scoreHelp"
+                    />
+                    <div
+                      *ngIf="score?.invalid && (score?.dirty || score?.touched)"
+                    >
+                      <div
+                        *ngIf="score?.errors?.['required']"
+                        class="text-danger"
+                      >
+                        Ingrese un porcentaje válido
+                      </div>
+                      <div
+                        *ngIf="score?.errors?.['pattern']"
+                        class="text-danger"
+                      >
+                        Ingrese un porcentaje válido
+                      </div>
+                      <div *ngIf="score?.errors?.['min']" class="text-danger">
+                        Ingrese un mínimo de 1%
+                      </div>
+                      <div *ngIf="score?.errors?.['max']" class="text-danger">
+                        Ingrese máximo de 100%
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                    id="closeSkillModal"
+                  >
+                    Cerrar
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="updateSkill(skillType)"
+                  >
+                    Guardar
+                  </button>
+                </div>
+              </div>
             </div>
-          </td>
-          <td>
-            <div class="progress orange">
-              <span class="progress-left">
-                <span class="progress-bar"></span>
-              </span>
-              <span class="progress-right">
-                <span class="progress-bar"></span>
-              </span>
-              <div class="progress-value">70%</div>
-            </div>
-          </td>
-          <td>
-            <div class="progress orange">
-              <span class="progress-left">
-                <span class="progress-bar"></span>
-              </span>
-              <span class="progress-right">
-                <span class="progress-bar"></span>
-              </span>
-              <div class="progress-value">70%</div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="skill">
-              Python
-              <button
-                *ngIf="isLogged"
-                type="button"
-                class="edit-social"
-                data-bs-toggle="modal"
-                data-bs-target="#educationModal"
-              >
-                <i class="bi bi-pencil-fill social-skill px-1"></i>
-              </button>
-              <button *ngIf="isLogged" type="button" class="edit-social">
-                <i class="bi bi-trash social-skill px-1"></i>
-              </button>
-            </div>
-          </td>
-          <td>
-            <div class="skill">
-              Python
-              <button
-                *ngIf="isLogged"
-                type="button"
-                class="edit-social"
-                data-bs-toggle="modal"
-                data-bs-target="#educationModal"
-              >
-                <i class="bi bi-pencil-fill social-skill px-1"></i>
-              </button>
-              <button *ngIf="isLogged" type="button" class="edit-social">
-                <i class="bi bi-trash social-skill px-1"></i>
-              </button>
-            </div>
-          </td>
-          <td>
-            <div class="skill">
-              Python
-              <button
-                *ngIf="isLogged"
-                type="button"
-                class="edit-social"
-                data-bs-toggle="modal"
-                data-bs-target="#educationModal"
-              >
-                <i class="bi bi-pencil-fill social-skill px-1"></i>
-              </button>
-              <button *ngIf="isLogged" type="button" class="edit-social">
-                <i class="bi bi-trash social-skill px-1"></i>
-              </button>
-            </div>
-          </td>
-        </tr>
+          </div>
+        </td>
       </table>
     </div>
 

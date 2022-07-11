@@ -21,4 +21,8 @@ export class SkillService {
   createSkill(skill: Skill): Observable<any> {
     return this.http.post(this.apiUrl + '/1/skills', skill);
   }
+
+  deleteSkill(skillId: number): Observable<any> {
+    return this.http.delete(this.apiUrl + '/skills/' + skillId);
+  }
 }

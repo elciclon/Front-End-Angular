@@ -183,19 +183,21 @@
       </div>
     </div>
   </div>
+
+  <!-- Show educations -->
   <div class="container-fluid">
     <div *ngFor="let education of educations" class="row align-items-top">
       <div class="col-1"></div>
-      <div class="col-3">
+      <div class="col-1">
         <img
           [src]="education.urlImage"
           class="rounded float-left"
-          alt="Computer and coffee"
-          width="150"
-          height="150"
+          alt="Education image"
+          width="100"
+          height="100"
         />
       </div>
-      <div class="col-6">
+      <div class="col-8">
         <p>
           <span class="big"
             >{{ education.institution }}, {{ education.career }},
@@ -212,6 +214,7 @@
           type="button"
           id="grouped"
           class="edit float-start"
+          (click)="deleteEducation(education.id)"
         >
           <i class="bi bi-trash social px-1"></i>
         </button>
@@ -228,7 +231,7 @@
         </button>
       </div>
 
-      <!-- Editar Educación -->
+      <!-- Edit Education -->
       <div
         class="modal fade"
         [id]="'educationModal' + education.id"
@@ -237,7 +240,6 @@
         aria-hidden="true"
       >
         <div class="modal-dialog">
-          <p>{{ education.id }},{{ education.institution }}</p>
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">

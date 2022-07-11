@@ -14,7 +14,6 @@ export class EducationComponent implements OnInit {
   formEducation: FormGroup;
   educations: Education[] = [];
   numRegex = '^[0-9]*$';
-  educationId = 0;
 
   constructor(
     private educationService: EducationService,
@@ -109,6 +108,14 @@ export class EducationComponent implements OnInit {
       alert('Hay errores!');
       this.formEducation.markAllAsTouched();
     }
+  }
+
+  deleteEducation(educationId: number) {
+    this.educationService
+      .deleteEducation(educationId)
+      .subscribe((educationsFromApi: any) => {
+        this.educations = educationsFromApi;
+      });
   }
 
   onLogout(): void {

@@ -1,40 +1,315 @@
 <div class="container mt-4">
   <div class="row align-items-top">
     <div class="col-1"></div>
-    <div class="titles col-3">Proyectos:</div>
+    <div class="titles col-3">Proyectos</div>
     <div class="col-6"></div>
-  </div>
-  <div class="row align-items-top">
-    <div class="col-1"></div>
-    <div class="col-3">
-      <img
-        src="../assets/Img/computer_coffee.png"
-        class="rounded float-left"
-        alt="Computer and coffee"
-        width="150"
-        height="150"
-      />
-    </div>
-    <!-- <div class="col-7 smallest">{{ experience.title }}</div> -->
-    <div class="col-6">TODO</div>
-    <div class="col">
-      <button *ngIf="isLogged" type="button" id="grouped" class="edit">
-        <i class="bi bi-trash float-end social px-1"></i>
-      </button>
+    <div class="col-1">
       <button
         *ngIf="isLogged"
         type="button"
-        class="edit"
-        id="grouped"
+        class="edit float-start"
         data-bs-toggle="modal"
-        data-bs-target="#educationModal"
+        data-bs-target="#addProjectModal"
       >
-        <i class="bi bi-pencil-fill float-end social px-1"></i>
-      </button>
-      <button *ngIf="isLogged" type="button" class="edit">
-        <i class="bi bi-plus-lg float-end social px-1"></i>
+        <i class="bi bi-plus-lg social px-1"></i>
       </button>
     </div>
-    <!-- </div> -->
+
+    <!-- Add project -->
+
+    <div
+      class="modal fade"
+      id="addProjectModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Agregar Proyecto</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="formProject">
+              <!-- projectTitle -->
+              <div class="mb-3">
+                <label for="projectTitle" class="form-label">Proyecto</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="projectTitle"
+                  formControlName="projectTitle"
+                  aria-describedby="projectTitleHelp"
+                />
+                <div
+                  *ngIf="
+                    projectTitle?.invalid &&
+                    (projectTitle?.dirty || projectTitle?.touched)
+                  "
+                >
+                  <div
+                    *ngIf="projectTitle?.errors?.['required']"
+                    class="text-danger"
+                  >
+                    Este campo es requerido
+                  </div>
+                </div>
+              </div>
+              <!-- Project Description -->
+              <div class="mb-3">
+                <label for="Project Description" class="form-label"
+                  >Descripción</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="projectDescription"
+                  formControlName="projectDescription"
+                  aria-describedby="projectDescriptionHelp"
+                />
+                <div
+                  *ngIf="
+                    projectDescription?.invalid &&
+                    (projectDescription?.dirty || projectDescription?.touched)
+                  "
+                >
+                  <div
+                    *ngIf="projectDescription?.errors?.['required']"
+                    class="text-danger"
+                  >
+                    Este campo es requerido
+                  </div>
+                </div>
+              </div>
+              <!-- Image url -->
+              <div class="mb-3">
+                <label for="urlImage" class="form-label">Url del logo</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="urlImage"
+                  formControlName="urlImage"
+                  aria-describedby="urlImageHelp"
+                />
+                <div
+                  *ngIf="
+                    urlImage?.invalid && (urlImage?.dirty || urlImage?.touched)
+                  "
+                >
+                  <div
+                    *ngIf="urlImage?.errors?.['required']"
+                    class="text-danger"
+                  >
+                    La url del logo es requerida
+                  </div>
+                  <div
+                    *ngIf="urlImage?.errors?.['pattern']"
+                    class="text-danger"
+                  >
+                    El formato de la url es inválido
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              id="closeProjectModal"
+            >
+              Cerrar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="createProject()"
+            >
+              Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Show experiences -->
+
+  <div class="container-fluid">
+    <div *ngFor="let project of projects" class="row align-items-top">
+      <div class="col-1"></div>
+      <div class="col-1">
+        <img
+          [src]="project.urlImage"
+          class="rounded float-left"
+          alt="Project Image"
+          width="100"
+          height="100"
+        />
+      </div>
+      <div class="col-8">
+        <p>
+          <span class="big"
+            >{{ project.projectTitle }}, {{ project.projectDescription }},
+          </span>
+        </p>
+      </div>
+      <div class="col-1">
+        <button
+          *ngIf="isLogged"
+          type="button"
+          id="grouped"
+          class="edit float-start"
+          (click)="deleteProject(project.id)"
+        >
+          <i class="bi bi-trash social px-1"></i>
+        </button>
+        <button
+          *ngIf="isLogged"
+          type="button"
+          class="edit"
+          id="grouped"
+          data-bs-toggle="modal"
+          [attr.data-bs-target]="'#projectModal' + project.id"
+          (click)="getProject(project)"
+        >
+          <i class="bi bi-pencil-fill social px-1"></i>
+        </button>
+      </div>
+
+      <!-- Edit project -->
+      <div
+        class="modal fade"
+        [id]="'projectModal' + project.id"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                Editar Proyecto
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="formProject">
+                <!-- Project Title -->
+                <div class="mb-3">
+                  <label for="projectTitle" class="form-label">Proyecto</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="projectTitle"
+                    formControlName="projectTitle"
+                    aria-describedby="projectTitleHelp"
+                  />
+                  <div
+                    *ngIf="
+                      projectTitle?.invalid &&
+                      (projectTitle?.dirty || projectTitle?.touched)
+                    "
+                  >
+                    <div
+                      *ngIf="projectTitle?.errors?.['required']"
+                      class="text-danger"
+                    >
+                      Este campo es requerido
+                    </div>
+                  </div>
+                </div>
+                <!-- Project Description -->
+                <div class="mb-3">
+                  <label for="Project Description" class="form-label"
+                    >Descripción</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="projectDescription"
+                    formControlName="projectDescription"
+                    aria-describedby="projectDescriptionHelp"
+                  />
+                  <div
+                    *ngIf="
+                      projectDescription?.invalid &&
+                      (projectDescription?.dirty || projectDescription?.touched)
+                    "
+                  >
+                    <div
+                      *ngIf="projectDescription?.errors?.['required']"
+                      class="text-danger"
+                    >
+                      Este campo es requerido
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Image url -->
+                <div class="mb-3">
+                  <label for="urlImage" class="form-label">Url del logo</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="urlImage"
+                    formControlName="urlImage"
+                    aria-describedby="urlImageHelp"
+                  />
+                  <div
+                    *ngIf="
+                      urlImage?.invalid &&
+                      (urlImage?.dirty || urlImage?.touched)
+                    "
+                  >
+                    <div
+                      *ngIf="urlImage?.errors?.['required']"
+                      class="text-danger"
+                    >
+                      La url del logo es requerida
+                    </div>
+                    <div
+                      *ngIf="urlImage?.errors?.['pattern']"
+                      class="text-danger"
+                    >
+                      El formato de la url es inválido
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+                id="closeProjectModal"
+              >
+                Cerrar
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                (click)="updateProject(project)"
+              >
+                Guardar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

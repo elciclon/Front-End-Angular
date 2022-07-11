@@ -21,4 +21,8 @@ export class LanguageService {
   createLanguage(language: Language): Observable<any> {
     return this.http.post(this.apiUrl + '/1/languages', language);
   }
+
+  deleteLanguage(languageId: number): Observable<any> {
+    return this.http.delete(this.apiUrl + '/languages/' + languageId);
+  }
 }

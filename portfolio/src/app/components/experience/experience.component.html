@@ -3,41 +3,23 @@
     <div class="col-1"></div>
     <div class="titles col-3">Experiencia:</div>
     <div class="col-6"></div>
-    <div class="col-1"></div>
-  </div>
-  <div class="row align-items-top">
-    <div class="col-1"></div>
-    <div class="col-3">
-      <img
-        src="../assets/Img/computer_coffee.png"
-        class="rounded float-left"
-        alt="Computer and coffee"
-        width="150"
-        height="150"
-      />
-    </div>
-    <div class="col">
-      <button *ngIf="isLogged" type="button" id="grouped" class="edit">
-        <i class="bi bi-trash float-end social px-1"></i>
-      </button>
+    <div class="col-1">
       <button
         *ngIf="isLogged"
         type="button"
-        class="edit"
-        id="grouped"
+        class="edit float-start"
         data-bs-toggle="modal"
-        data-bs-target="#experienceModal"
+        data-bs-target="#addExperienceModal"
       >
-        <i class="bi bi-pencil-fill float-end social px-1"></i>
-      </button>
-      <button *ngIf="isLogged" type="button" class="edit">
-        <i class="bi bi-plus-lg float-end social px-1"></i>
+        <i class="bi bi-plus-lg social px-1"></i>
       </button>
     </div>
-    <!-- Edit experience -->
+
+    <!-- Add experience -->
+
     <div
       class="modal fade"
-      id="experienceModal"
+      id="addExperienceModal"
       tabindex="-1"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
@@ -46,7 +28,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">
-              Editar Experiencia
+              Agregar Experiencia
             </h5>
             <button
               type="button"
@@ -57,56 +39,111 @@
           </div>
           <div class="modal-body">
             <form [formGroup]="formExperience">
+              <!-- Firm -->
               <div class="mb-3">
-                <label for="experienceName" class="form-label"
-                  >Empresa y posición</label
-                >
+                <label for="firm" class="form-label">Empresa</label>
                 <input
                   type="text"
                   class="form-control"
-                  id="experienceName"
-                  formControlName="experienceName"
-                  aria-describedby="experienceNameHelp"
+                  id="firm"
+                  formControlName="firm"
+                  aria-describedby="firmHelp"
                 />
-                <div
-                  *ngIf="
-                    experienceName?.invalid &&
-                    (experienceName?.dirty || experienceName?.touched)
-                  "
-                >
-                  <div
-                    *ngIf="experienceName?.errors?.['required']"
-                    class="text-danger"
-                  >
+                <div *ngIf="firm?.invalid && (firm?.dirty || firm?.touched)">
+                  <div *ngIf="firm?.errors?.['required']" class="text-danger">
                     Este campo es requerido
                   </div>
                 </div>
               </div>
+              <!-- Job -->
               <div class="mb-3">
-                <label for="experienceImage" class="form-label"
-                  >Url del logo</label
-                >
+                <label for="Job" class="form-label">Puesto</label>
                 <input
                   type="text"
                   class="form-control"
-                  id="experienceImage"
-                  formControlName="experienceImage"
-                  aria-describedby="experienceImageHelp"
+                  id="job"
+                  formControlName="job"
+                  aria-describedby="jobHelp"
+                />
+                <div *ngIf="job?.invalid && (job?.dirty || job?.touched)">
+                  <div *ngIf="job?.errors?.['required']" class="text-danger">
+                    Este campo es requerido
+                  </div>
+                </div>
+              </div>
+              <!-- Start -->
+              <div class="mb-3">
+                <label for="start" class="form-label">Año de ingreso</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="start"
+                  formControlName="start"
+                  aria-describedby="start"
+                />
+                <div *ngIf="start?.invalid && (start?.dirty || start?.touched)">
+                  <div *ngIf="start?.errors?.['required']" class="text-danger">
+                    Ingrese un año de ingreso válido
+                  </div>
+                  <div *ngIf="start?.errors?.['pattern']" class="text-danger">
+                    Ingrese un año válido
+                  </div>
+                  <div *ngIf="start?.errors?.['min']" class="text-danger">
+                    Ingrese un año desde 1972
+                  </div>
+                  <div *ngIf="start?.errors?.['max']" class="text-danger">
+                    Ingrese un año no superior al 2072
+                  </div>
+                </div>
+              </div>
+              <!-- End -->
+              <div class="mb-3">
+                <label for="end" class="form-label">Año de egreso</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="end"
+                  formControlName="end"
+                  aria-describedby="endHelp"
+                />
+                <div *ngIf="end?.invalid && (end?.dirty || end?.touched)">
+                  <div *ngIf="end?.errors?.['required']" class="text-danger">
+                    Ingrese un año de egreso válido
+                  </div>
+                  <div *ngIf="end?.errors?.['pattern']" class="text-danger">
+                    Ingrese un año válido
+                  </div>
+                  <div *ngIf="end?.errors?.['min']" class="text-danger">
+                    Ingrese un año desde 1972
+                  </div>
+                  <div *ngIf="end?.errors?.['max']" class="text-danger">
+                    Ingrese un año no superior al 2072
+                  </div>
+                </div>
+              </div>
+              <!-- Image url -->
+              <div class="mb-3">
+                <label for="urlImage" class="form-label">Url del logo</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="urlImage"
+                  formControlName="urlImage"
+                  aria-describedby="urlImageHelp"
                 />
                 <div
                   *ngIf="
-                    experienceImage?.invalid &&
-                    (experienceImage?.dirty || experienceImage?.touched)
+                    urlImage?.invalid && (urlImage?.dirty || urlImage?.touched)
                   "
                 >
                   <div
-                    *ngIf="experienceImage?.errors?.['required']"
+                    *ngIf="urlImage?.errors?.['required']"
                     class="text-danger"
                   >
                     La url del logo es requerida
                   </div>
                   <div
-                    *ngIf="experienceImage?.errors?.['pattern']"
+                    *ngIf="urlImage?.errors?.['pattern']"
                     class="text-danger"
                   >
                     El formato de la url es inválido
@@ -127,10 +164,220 @@
             <button
               type="button"
               class="btn btn-primary"
-              (click)="saveExperience()"
+              (click)="createExperience()"
             >
               Guardar
             </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Show experiences -->
+  <div class="container-fluid">
+    <div *ngFor="let experience of experiences" class="row align-items-top">
+      <div class="col-1"></div>
+      <div class="col-1">
+        <img
+          [src]="experience.urlImage"
+          class="rounded float-left"
+          alt="Experience Image"
+          width="100"
+          height="100"
+        />
+      </div>
+      <div class="col-8">
+        <p>
+          <span class="big">{{ experience.firm }}, {{ experience.job }}, </span>
+          <span class="short">desde </span>
+          <span class="big">{{ experience.start }} </span>
+          <span class="short">hasta </span>
+          <span class="big">{{ experience.end }}.</span>
+        </p>
+      </div>
+      <div class="col-1">
+        <button
+          *ngIf="isLogged"
+          type="button"
+          id="grouped"
+          class="edit float-start"
+          (click)="deleteExperience(experience.id)"
+        >
+          <i class="bi bi-trash social px-1"></i>
+        </button>
+        <button
+          *ngIf="isLogged"
+          type="button"
+          class="edit"
+          id="grouped"
+          data-bs-toggle="modal"
+          [attr.data-bs-target]="'#experienceModal' + experience.id"
+          (click)="getExperience(experience)"
+        >
+          <i class="bi bi-pencil-fill social px-1"></i>
+        </button>
+      </div>
+
+      <!-- Edit Experience -->
+      <div
+        class="modal fade"
+        [id]="'experienceModal' + experience.id"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                Editar Experiencia
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="formExperience">
+                <!-- Firm -->
+                <div class="mb-3">
+                  <label for="firm" class="form-label">Empresa</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="firm"
+                    formControlName="firm"
+                    aria-describedby="FirmHelp"
+                  />
+                  <div *ngIf="firm?.invalid && (firm?.dirty || firm?.touched)">
+                    <div *ngIf="firm?.errors?.['required']" class="text-danger">
+                      Este campo es requerido
+                    </div>
+                  </div>
+                </div>
+                <!-- Job -->
+                <div class="mb-3">
+                  <label for="Job" class="form-label">Puesto</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="job"
+                    formControlName="job"
+                    aria-describedby="jobHelp"
+                  />
+                  <div *ngIf="job?.invalid && (job?.dirty || job?.touched)">
+                    <div *ngIf="job?.errors?.['required']" class="text-danger">
+                      Este campo es requerido
+                    </div>
+                  </div>
+                </div>
+                <!-- Start -->
+                <div class="mb-3">
+                  <label for="start" class="form-label">Año de ingreso</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="start"
+                    formControlName="start"
+                    aria-describedby="start"
+                  />
+                  <div
+                    *ngIf="start?.invalid && (start?.dirty || start?.touched)"
+                  >
+                    <div
+                      *ngIf="start?.errors?.['required']"
+                      class="text-danger"
+                    >
+                      Ingrese un año de ingreso válido
+                    </div>
+                    <div *ngIf="start?.errors?.['pattern']" class="text-danger">
+                      Ingrese un año válido
+                    </div>
+                    <div *ngIf="start?.errors?.['min']" class="text-danger">
+                      Ingrese un año desde 1972
+                    </div>
+                    <div *ngIf="start?.errors?.['max']" class="text-danger">
+                      Ingrese un año no superior al 2072
+                    </div>
+                  </div>
+                </div>
+                <!-- End -->
+                <div class="mb-3">
+                  <label for="end" class="form-label">Año de egreso</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="end"
+                    formControlName="end"
+                    aria-describedby="endHelp"
+                  />
+                  <div *ngIf="end?.invalid && (end?.dirty || end?.touched)">
+                    <div *ngIf="end?.errors?.['required']" class="text-danger">
+                      Ingrese un año de egreso válido
+                    </div>
+                    <div *ngIf="end?.errors?.['pattern']" class="text-danger">
+                      Ingrese un año válido
+                    </div>
+                    <div *ngIf="end?.errors?.['min']" class="text-danger">
+                      Ingrese un año desde 1972
+                    </div>
+                    <div *ngIf="end?.errors?.['max']" class="text-danger">
+                      Ingrese un año no superior al 2072
+                    </div>
+                  </div>
+                </div>
+                <!-- Image url -->
+                <div class="mb-3">
+                  <label for="urlImage" class="form-label">Url del logo</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="urlImage"
+                    formControlName="urlImage"
+                    aria-describedby="urlImageHelp"
+                  />
+                  <div
+                    *ngIf="
+                      urlImage?.invalid &&
+                      (urlImage?.dirty || urlImage?.touched)
+                    "
+                  >
+                    <div
+                      *ngIf="urlImage?.errors?.['required']"
+                      class="text-danger"
+                    >
+                      La url del logo es requerida
+                    </div>
+                    <div
+                      *ngIf="urlImage?.errors?.['pattern']"
+                      class="text-danger"
+                    >
+                      El formato de la url es inválido
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+                id="closeExperienceModal"
+              >
+                Cerrar
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                (click)="updateExperience(experience)"
+              >
+                Guardar
+              </button>
+            </div>
           </div>
         </div>
       </div>

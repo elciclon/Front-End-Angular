@@ -14,7 +14,6 @@ export class SkillComponent implements OnInit {
   formSkill: FormGroup;
   skills: Skill[] = [];
   numRegex = '^[0-9]*$';
-  skillId: 0;
 
   constructor(
     private skillService: SkillService,
@@ -83,8 +82,22 @@ export class SkillComponent implements OnInit {
     }
   }
 
+  deleteSkill(skillId: number) {
+    this.skillService.deleteSkill(skillId).subscribe((skillsFromApi: any) => {
+      this.skills = skillsFromApi;
+    });
+  }
+
   onLogout(): void {
     this.tokenService.logout();
     window.location.reload();
+  }
+
+  get skill() {
+    return this.formSkill.get('skill');
+  }
+
+  get score() {
+    return this.formSkill.get('score');
   }
 }
