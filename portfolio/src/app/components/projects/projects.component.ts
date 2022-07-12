@@ -23,6 +23,19 @@ export class ProjectsComponent implements OnInit {
     this.formProject = this.formBuilder.group({
       projectTitle: ['', [Validators.required]],
       projectDescription: ['', [Validators.required]],
+      projectDate: [
+        '',
+        [
+          Validators.required,
+          Validators.min(1972),
+          Validators.max(2072),
+          Validators.pattern(this.numRegex),
+        ],
+      ],
+      projectLink: [
+        '',
+        [Validators.required, Validators.pattern('https?://.+')],
+      ],
       urlImage: ['', [Validators.required, Validators.pattern('https?://.+')]],
     });
   }
@@ -41,6 +54,8 @@ export class ProjectsComponent implements OnInit {
       project.projectTitle = this.formProject.controls['projectTitle'].value;
       project.projectDescription =
         this.formProject.controls['projectDescription'].value;
+      project.projectDate = this.formProject.controls['projectDate'].value;
+      project.projectLink = this.formProject.controls['projectLink'].value;
       project.urlImage = this.formProject.controls['urlImage'].value;
 
       this.projectsService
@@ -61,6 +76,8 @@ export class ProjectsComponent implements OnInit {
     this.formProject
       .get('projectDescription')
       ?.setValue(project.projectDescription);
+    this.formProject.get('projectDate')?.setValue(project.projectDate);
+    this.formProject.get('projectLink')?.setValue(project.projectLink);
     this.formProject.get('urlImage')?.setValue(project.urlImage);
   }
 
@@ -71,6 +88,8 @@ export class ProjectsComponent implements OnInit {
         projectTitle: this.formProject.controls['projectTitle'].value,
         projectDescription:
           this.formProject.controls['projectDescription'].value,
+        projectDate: this.formProject.controls['projectDate'].value,
+        projectLink: this.formProject.controls['projectLink'].value,
         urlImage: this.formProject.controls['urlImage'].value,
       };
       this.projectsService
@@ -105,6 +124,14 @@ export class ProjectsComponent implements OnInit {
 
   get projectDescription() {
     return this.formProject.get('projectDescription');
+  }
+
+  get projectDate() {
+    return this.formProject.get('projectDate');
+  }
+
+  get projectLink() {
+    return this.formProject.get('projectLink');
   }
 
   get urlImage() {

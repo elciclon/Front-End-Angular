@@ -87,6 +87,76 @@
                   </div>
                 </div>
               </div>
+              <!-- Project Date -->
+              <div class="mb-3">
+                <label for="date" class="form-label">Año de realización</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="projectDate"
+                  formControlName="projectDate"
+                  aria-describedby="projectDateHelp"
+                />
+                <div
+                  *ngIf="
+                    projectDate?.invalid &&
+                    (projectDate?.dirty || projectDate?.touched)
+                  "
+                >
+                  <div
+                    *ngIf="projectDate?.errors?.['required']"
+                    class="text-danger"
+                  >
+                    Ingrese un año de egreso válido
+                  </div>
+                  <div
+                    *ngIf="projectDate?.errors?.['pattern']"
+                    class="text-danger"
+                  >
+                    Ingrese un año válido
+                  </div>
+                  <div *ngIf="projectDate?.errors?.['min']" class="text-danger">
+                    Ingrese un año desde 1972
+                  </div>
+                  <div *ngIf="projectDate?.errors?.['max']" class="text-danger">
+                    Ingrese un año no superior al 2072
+                  </div>
+                </div>
+              </div>
+
+              <!-- Link -->
+              <div class="mb-3">
+                <label for="projectLink" class="form-label"
+                  >Link al proyecto</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="projectLink"
+                  formControlName="projectLink"
+                  aria-describedby="projectLinkHelp"
+                />
+                <div
+                  *ngIf="
+                    projectLink?.invalid &&
+                    (projectLink?.dirty || projectLink?.touched)
+                  "
+                >
+                  <div
+                    *ngIf="projectLink?.errors?.['required']"
+                    class="text-danger"
+                  >
+                    La url del logo es requerida
+                  </div>
+                  <div
+                    *ngIf="projectLink?.errors?.['pattern']"
+                    class="text-danger"
+                  >
+                    El formato de la url es inválido
+                  </div>
+                </div>
+              </div>
+
               <!-- Image url -->
               <div class="mb-3">
                 <label for="urlImage" class="form-label">Url del logo</label>
@@ -159,8 +229,14 @@
           <span class="big"
             >{{ project.projectTitle }}, {{ project.projectDescription }},
           </span>
+          <span class="small">creado en </span>
+          <span class="big">{{ project.projectDate }}.</span>
+          <span class="small">
+            <a [href]="project.projectLink" target="_blank">Ver proyecto</a>
+          </span>
         </p>
       </div>
+
       <div class="col-1">
         <button
           *ngIf="isLogged"
@@ -254,6 +330,84 @@
                       class="text-danger"
                     >
                       Este campo es requerido
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Date -->
+                <div class="mb-3">
+                  <label for="projectDate" class="form-label"
+                    >Año de creación</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="projectDate"
+                    formControlName="projectDate"
+                    aria-describedby="projectDate"
+                  />
+                  <div
+                    *ngIf="
+                      projectDate?.invalid &&
+                      (projectDate?.dirty || projectDate?.touched)
+                    "
+                  >
+                    <div
+                      *ngIf="projectDate?.errors?.['required']"
+                      class="text-danger"
+                    >
+                      Ingrese un año de ingreso válido
+                    </div>
+                    <div
+                      *ngIf="projectDate?.errors?.['pattern']"
+                      class="text-danger"
+                    >
+                      Ingrese un año válido
+                    </div>
+                    <div
+                      *ngIf="projectDate?.errors?.['min']"
+                      class="text-danger"
+                    >
+                      Ingrese un año desde 1972
+                    </div>
+                    <div
+                      *ngIf="projectDate?.errors?.['max']"
+                      class="text-danger"
+                    >
+                      Ingrese un año no superior al 2072
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Link -->
+                <div class="mb-3">
+                  <label for="projectLink" class="form-label"
+                    >Url del proyecto</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="projectLink"
+                    formControlName="projectLink"
+                    aria-describedby="projectLinkHelp"
+                  />
+                  <div
+                    *ngIf="
+                      projectLink?.invalid &&
+                      (projectLink?.dirty || projectLink?.touched)
+                    "
+                  >
+                    <div
+                      *ngIf="projectLink?.errors?.['required']"
+                      class="text-danger"
+                    >
+                      La url del proyecto es requerida
+                    </div>
+                    <div
+                      *ngIf="projectLink?.errors?.['pattern']"
+                      class="text-danger"
+                    >
+                      El formato de la url es inválido
                     </div>
                   </div>
                 </div>
