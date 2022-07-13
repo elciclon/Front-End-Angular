@@ -5,7 +5,8 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class HeaderService {
-  private apiUrl = 'http://localhost:8080/api/person/1';
+  private apiUrl =
+    'https://portfolio-adrianfernandezfazio.herokuapp.com/api/person/1';
   constructor(private http: HttpClient) {}
 
   getPerson() {

@@ -7,7 +7,8 @@ import { Language } from '../language';
   providedIn: 'root',
 })
 export class LanguageService {
-  private apiUrl = 'http://localhost:8080/api/person';
+  private apiUrl =
+    'https://portfolio-adrianfernandezfazio.herokuapp.com/api/person';
   constructor(private http: HttpClient) {}
 
   getAllLanguages() {

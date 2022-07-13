@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ExperienceService {
-  private apiUrl = 'http://localhost:8080/api/person';
+  private apiUrl =
+    'https://portfolio-adrianfernandezfazio.herokuapp.com/api/person';
 
   constructor(private http: HttpClient) {}
 

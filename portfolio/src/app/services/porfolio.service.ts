@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class PorfolioService {
-  url: string = 'http://localhost:8080/porfolio';
+  url: string = 'https://portfolio-adrianfernandezfazio.herokuapp.com/porfolio';
 
   constructor(private http: HttpClient) {}
 
