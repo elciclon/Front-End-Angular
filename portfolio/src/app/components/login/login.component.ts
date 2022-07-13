@@ -29,11 +29,6 @@ export class LoginComponent implements OnInit {
     this.form = this.formBuilder.group({
       user: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(4)]],
-      deviceInfo: this.formBuilder.group({
-        deviceId: ['17867868768'],
-        deviceType: ['DEVICE_TYPE_ANDROID'],
-        deviceToken: ['6765757eececc34'],
-      }),
     });
   }
 
@@ -72,23 +67,6 @@ export class LoginComponent implements OnInit {
         this.errMsg = error.error.message;
         console.log(this.errMsg);
       }
-
-      // onSubmit(event: Event) {
-      //     event.preventDefault();
-      //     this.authenticationService.logIn(this.form.value).subscribe((data) => {
-      //       console.log('DATA:' + JSON.stringify(data));
-      //       this.isLogged = true;
-      //       this.isLoginFail = false;
-      //       this.tokenService.setToken(data.token);
-      //       this.tokenService.setUserName(data.userName);
-      //       this.tokenService.setAuthorities(data.authorities);
-      //       this.roles = data.authorities;
-      //   }, error => {
-      //     this.isLogged = false;
-      //     this.isLoginFail = true;
-      // }
-      //     this.route.navigate(['/portfolio']);
-      //   }
     );
   }
 }
