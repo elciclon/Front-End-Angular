@@ -7,7 +7,8 @@ import { Skill } from '../skill';
   providedIn: 'root',
 })
 export class SkillService {
-  private apiUrl = 'http://localhost:8080/api/person';
+  private apiUrl =
+    'https://portfolio-adrianfernandezfazio.herokuapp.com/api/person';
   constructor(private http: HttpClient) {}
 
   getAllSkills() {
